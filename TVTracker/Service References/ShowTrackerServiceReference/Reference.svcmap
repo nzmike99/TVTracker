@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="7548706c-220e-4460-aff9-05dd44ef7347" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b81c54b8-8dda-44c2-88b7-78efe26934ab" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="e08ccf7b-88f7-4df6-946f-8c5a17a3c9a2" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8eafe29f-474f-4c03-9123-10b6143a6fc6" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
+    <MetadataFile FileName="ShowTrackerWCF.xsd" MetadataType="Schema" ID="0302d768-6462-45ad-8c33-4f07661778b6" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

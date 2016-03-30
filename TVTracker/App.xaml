@@ -5,4 +5,52 @@
     xmlns:local="using:TVTracker"
     RequestedTheme="Light">
 
+    <!--xmlns:vm="using:TVTracker.ViewModel"-->
+
+    <Application.Resources>        
+
+        <ResourceDictionary>
+            
+            <!--<vm:MainViewModel x:Key="MainViewModel"/>-->
+
+            <!--<vm:ViewModel x:Key="ViewModel"/>-->
+
+            <x:String x:Key="AppName">TVTracker</x:String>
+
+            <!-- Berry Blues: Midnight blue, Indigo ink, blueberry, pale washed out blue (periwinkle) -->
+            <SolidColorBrush x:Key="Dark" Color="#1E1F26"/>
+            <SolidColorBrush x:Key="MediumDark" Color="#283655"/>
+            <SolidColorBrush x:Key="Medium" Color="#4D648D"/>
+            <SolidColorBrush x:Key="Light" Color="#D0E1F9"/>
+            <SolidColorBrush x:Key="Bright" Color="AntiqueWhite"/>
+
+            <ResourceDictionary.ThemeDictionaries>
+
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="ApplicationPageBackgroundThemeBrush" Color="Black"/>
+                    <SolidColorBrush x:Key="ControlPageBackgroundBrush" Color="Black" />
+                    <SolidColorBrush x:Key="ChromeHighBrush" Color="#FF1F1F1F" />
+                    <SolidColorBrush x:Key="BackgroundBrush" Color="#FF000000" />
+                    <SolidColorBrush x:Key="PageHeaderBackgroundBrush" Color="#44FFFFFF" />
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="ControlPageBackgroundBrush" Color="White" />
+                    <SolidColorBrush x:Key="ChromeHighBrush" Color="#FFF9F9F9" />
+                    <SolidColorBrush x:Key="BackgroundBrush" Color="#FFFFFFFF" />
+                    <SolidColorBrush x:Key="PageHeaderBackgroundBrush" Color="#44000000" />
+                </ResourceDictionary>
+
+                <ResourceDictionary x:Key="HighContrast">
+                    <SolidColorBrush x:Key="ControlPageBackgroundBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                    <SolidColorBrush x:Key="ChromeHighBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                    <SolidColorBrush x:Key="BackgroundBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                    <SolidColorBrush x:Key="PageHeaderBackgroundBrush" Color="{ThemeResource SystemColorWindowColor}" />
+                </ResourceDictionary>
+
+            </ResourceDictionary.ThemeDictionaries>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

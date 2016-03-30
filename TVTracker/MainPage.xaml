@@ -3,11 +3,469 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:TVTracker"
+    xmlns:vm="using:TVTracker.ViewModel"
+    xmlns:model="using:TVTracker.Model"
+    xmlns:hlp="using:TVTracker.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    RequestedTheme="Light">
+
+    <Page.DataContext>
+        <vm:MainViewModel/>
+    </Page.DataContext>
+
+    <Page.BottomAppBar>
+        <CommandBar x:Name="bottomAppBar" Visibility="Visible" IsOpen="False" ClosedDisplayMode="Compact" IsSticky="False">
+            <AppBarButton x:Name="searchButton" Label="Search" Icon="Find" Click="SearchButton_Click" />
+            <AppBarButton x:Name="addButton" Label="Add Show" Icon="Add" Click="AddShowButton_Click" />
+            <AppBarButton x:Name="waitButton" Label="Test" Icon="Clock" Click="WaitButton_Click" />
+            <AppBarButton x:Name="refreshButton" Label="Refresh" Icon="Refresh" Click="RefreshButton_Click" />
+        </CommandBar>
+    </Page.BottomAppBar>
+    <!--xmlns:vm="using:TVTracker.ViewModel"-->
+
+    <!--<Page.DataContext>
+        <vm:MainViewModel/>
+    </Page.DataContext>-->
+
+    <Page.Resources>
+        <!--<SolidColorBrush x:Key="SectionBackground1" Color="Gray"/>-->
+
+        <!-- Berry Blues: Midnight blue, Indigo ink, blueberry, pale washed out blue (periwinkle) -->
+        <!--<SolidColorBrush x:Key="Dark" Color="#1E1F26"/>
+        <SolidColorBrush x:Key="MediumDark" Color="#283655"/>
+        <SolidColorBrush x:Key="Medium" Color="#4D648D"/>
+        <SolidColorBrush x:Key="Light" Color="#D0E1F9"/>
+        <SolidColorBrush x:Key="Bright" Color="AntiqueWhite"/>-->
+
+        <!-- Misty greens/Hazy grays -->
+        <!--<SolidColorBrush x:Key="VeryDark" Color="#04202C"/>
+        <SolidColorBrush x:Key="Dark" Color="#324851"/>
+        <SolidColorBrush x:Key="MediumDark" Color="#335252"/>
+        <SolidColorBrush x:Key="Medium" Color="#8E9B97"/>
+        <SolidColorBrush x:Key="Light" Color="#D4DDE1"/>
+        <SolidColorBrush x:Key="Bright" Color="AntiqueWhite"/>-->
+
+        <!-- blue, duck egg blue, grey, bright yellow -->
+        <!--<SolidColorBrush x:Key="Dark" Color="#252839"/>
+        <SolidColorBrush x:Key="MediumDark" Color="#677077"/>
+        <SolidColorBrush x:Key="Medium" Color="#B5B5B7"/>
+        <SolidColorBrush x:Key="Light" Color="#F2B632"/>
+        <SolidColorBrush x:Key="Bright" Color="AntiqueWhite"/>-->
+
+        <x:String x:Key="AppName">TV Tracker</x:String>
+
+        <Style TargetType="CheckBox">
+            <Setter Property="Width" Value="Auto"/>
+            <!--<Setter Property="Background" Value="#FF448DCA"/>-->
+            <Setter Property="Foreground" Value="{StaticResource Medium}"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <!--<Setter Property="Padding" Value="4,1,0,0"/>-->
+            <!--<Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Dark}"/>-->
+        </Style>
+
+        <!-- String convert for doing datetime foramtting. -->
+        <hlp:StringFormatConverter x:Key="StringFormatConverter" />
+        <hlp:DateTimeFormatConverter x:Key="DateTimeFormatConverter"/>
+
+        <DataTemplate x:Key="ShowListTemplate" x:DataType="model:TVShow">
+            <Grid Width="640" Height="Auto" Margin="5" HorizontalAlignment="Stretch" RightTapped="ShowsList_RightTapped">
+
+                <FlyoutBase.AttachedFlyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem x:Name="EditButton" Text="Edit" Click="FlyoutEditButton_Click"/>
+                        <MenuFlyoutItem x:Name="RefreshButton" Text="Refresh" Click="FlyoutRefreshButton_Click"/>
+                        <MenuFlyoutItem x:Name="DeleteButton" Text="Delete" Click="FlyoutDeleteButton_Click"/>
+                    </MenuFlyout>
+                </FlyoutBase.AttachedFlyout>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="380"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Title}" FontSize="16" Foreground="{StaticResource Light}"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind Seasons}" FontSize="16" Foreground="{StaticResource Light}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="2" FontSize="16"  Foreground="{StaticResource Light}"
+                           Text="{x:Bind LastWatchedDate, Mode=OneWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy HH\\\\:mm}'}"                            
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="{Binding LastWatchedEpisodeRef}" FontSize="16" Foreground="{StaticResource Light}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DetailsTemplate" x:DataType="model:TVShow">
+            
+            <Grid Width="640" Margin="0,20,0,0" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <!--<RowDefinition Height="Auto"/>-->
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Title}" FontSize="16" Margin="5" FontWeight="Bold"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}"  />
+
+                    <Grid Grid.Row="1" Grid.Column="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Seasons" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind Seasons}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Status" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{x:Bind Status}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Network" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{x:Bind TVMazeSeries.network}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Premiered" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{x:Bind TVMazeSeries.premieredDisplay}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Runtime" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{x:Bind TVMazeSeries.runtime}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="1">
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!--RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/-->
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Margin="5" BorderBrush="{StaticResource Bright}">
+                        <Image Margin="2" Source="{x:Bind ImageURL}"
+                                       VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                        <!-- Source="{x:Bind TVMazeSeries.image.medium.AbsoluteUri}" -->
+                    </Border>
+                </Grid>
+
+                <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{x:Bind TVMazeSeries.summary}" FontSize="16" Margin="5" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" TextWrapping="WrapWholeWords"  />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="EpisodeListTemplate" x:DataType="model:Episode">
+            
+            <Grid Width="640" Height="Auto" Margin="5" HorizontalAlignment="Stretch">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="360"/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+
+                <CheckBox Grid.Row="0" Grid.Column="0" IsThreeState="False" IsEnabled="{x:Bind CanSelect}" IsChecked="{x:Bind Watched, Mode=TwoWay}" 
+                          VerticalAlignment="Center"  Tag="{x:Bind EpisodeRef}" />
+                <!--IsEnabled="{x:Bind CanSelect}"  Checked="EpisodeCheckBox_Checked"-->
+                <!--<CheckBox Grid.Row="0" Grid.Column="0" IsThreeState="False" Foreground="{StaticResource Medium}" 
+                          IsChecked="{x:Bind Watched, Mode=TwoWay}" BorderBrush="{StaticResource MediumDark}"/>-->
+                <!--VerticalAlignment="Center" HorizontalAlignment="Center" />-->
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind EpisodeRef}" FontSize="16" Foreground="{StaticResource MediumDark}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{x:Bind Title}" FontSize="16" Foreground="{StaticResource MediumDark}" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="WrapWholeWords" />
+
+                <TextBlock Grid.Row="0" Grid.Column="3" FontSize="16" Foreground="{StaticResource MediumDark}"
+                           Text="{Binding DateWatched,Converter={StaticResource DateTimeFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy HH\\\\:mm}'}"                           
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <!-- , Mode=TwoWay, Converter={StaticResource DateTimeFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy HH\\\\:mm}'-->
+
+
+                <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=episodeReference}" FontSize="16" Foreground="{StaticResource MediumDark}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"   />
+
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=name}" FontSize="16" Foreground="{StaticResource MediumDark}" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left"  TextWrapping="WrapWholeWords" />
+
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Path=airdateDisplay}" FontSize="16" Foreground="{StaticResource MediumDark}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"  />-->
+
+
+            </Grid>
+        </DataTemplate>
+
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+        <Hub SectionHeaderClick="Hub_SectionHeaderClick" Margin="0,0,0,0" HorizontalContentAlignment="Stretch" Background="{StaticResource Dark}">
+
+            <Hub.Header>
+                <TextBlock Text="TV Tracker" FontSize="14" Foreground="{StaticResource Bright}"/>
+            </Hub.Header>
+
+            <HubSection Name="hsShows" MinWidth="640" Padding="20" VerticalAlignment="Top" Background="{StaticResource Dark}" >
+                <HubSection.Header>
+                    <TextBlock Text="Shows" TextLineBounds="TrimToBaseline" OpticalMarginAlignment="TrimSideBearings" 
+                               FontSize="24" Foreground="{StaticResource Light}"/>
+                </HubSection.Header>
+
+                <DataTemplate x:DataType="local:MainPage">
+
+                    <ListView Grid.Row="0" 
+                                Foreground="{StaticResource Light}"
+                                Background="{StaticResource Dark}"
+                                Margin="-14,20,0,0"                              
+                                ItemsSource="{Binding AllShows}"                              
+                                ItemTemplate="{StaticResource ShowListTemplate}"
+                                IsSwipeEnabled="True"
+                                IsItemClickEnabled="True"
+                                SelectedItem="{Binding SelectedTVShow, Mode=TwoWay}"                                
+                                SelectionMode="Single"
+                                ScrollViewer.VerticalScrollMode="Enabled"
+                                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        
+                        <!---->
+                        <!--SelectedIndex="{Binding SelectedTVShowIndex, Mode=TwoWay}"-->
+                        <!--ItemClick="ShowsList_ItemClick">-->
+                        
+                        <ListView.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition/>
+                            </TransitionCollection>
+                        </ListView.Transitions>
+
+                        <ListView.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Width="640" Height="Auto" Margin="5" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="380"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="80"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Title" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                                               Tag="TITLE,ASC" Tapped="ShowsGridHeading_Tapped"/>
+
+                                    <TextBlock Grid.Column="1"  Text="Seasons" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                                               Tag="SEASONS,ASC" Tapped="ShowsGridHeading_Tapped"/>
+
+                                    <TextBlock Grid.Column="2" Text="Last Watched" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" 
+                                               Tag="WATCHED,ASC" Tapped="ShowsGridHeading_Tapped"/>
+
+                                    <TextBlock Grid.Column="3" Text="Last Episode" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                               VerticalAlignment="Bottom" HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" 
+                                               Tag="EPISODE,ASC" Tapped="ShowsGridHeading_Tapped"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.HeaderTemplate>
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+
+            <HubSection Name="hsDetails" MinWidth="640" Padding="20" Background="{StaticResource MediumDark}" >
+                <HubSection.Header>
+                    <TextBlock Text="Details" TextLineBounds="TrimToBaseline" OpticalMarginAlignment="TrimSideBearings" 
+                               FontSize="24" Foreground="{StaticResource Light}"/>
+                </HubSection.Header>                
+
+                <DataTemplate x:DataType="vm:MainViewModel">
+                    
+                    <Grid DataContext="{Binding SelectedTVShow}" Width="640" Margin="0,20,0,0" Height="Auto" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Row="0" Grid.Column="0">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Title}" FontSize="16" Margin="5,10" FontWeight="Bold"
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}"  />
+
+                            <Grid Grid.Row="1" Grid.Column="0">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Seasons" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Seasons}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Status" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Status}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Network" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Network}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Premiered" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Premiered}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Runtime" FontSize="16"  Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Bright}" />
+                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Runtime}" FontSize="16" Margin="8" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" />
+
+                                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Name="btnViewCrew" IsEnabled="True" Content="View Cast &amp; Crew" 
+                                        Background="{StaticResource Light}" Foreground="{StaticResource MediumDark}" FontSize="16" Margin="8,15"
+                                        HorizontalAlignment="Left" VerticalAlignment="Center" Click="btnViewCrew_Click"/>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Grid.Row="0" Grid.Column="1">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="0" Margin="5" BorderBrush="{StaticResource Bright}">
+                                <Image Margin="2" Source="{Binding ImageURL}"
+                                       VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding Summary}" FontSize="16" Margin="5" 
+                                   VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="{StaticResource Light}" TextWrapping="WrapWholeWords"  />
+                    </Grid>
+                </DataTemplate>
+            </HubSection>          
+
+            <HubSection Name="hsEpisodes" MinWidth="640" Padding="20" VerticalAlignment="Stretch" Background="{StaticResource Light}">
+                <HubSection.Header>
+                    <TextBlock Text="Episodes" TextLineBounds="TrimToBaseline" OpticalMarginAlignment="TrimSideBearings" 
+                               FontSize="24" Foreground="{StaticResource Dark}"/>
+                </HubSection.Header>
+                <DataTemplate x:DataType="local:MainPage">
+                    <ListView
+                        Margin="-14,20,0,0"
+                        AutomationProperties.AutomationId="ItemGridView"
+                        AutomationProperties.Name="Episodes"          
+                        ItemsSource="{Binding SelectedTVShow.EpisodeData}"                             
+                        ItemTemplate="{StaticResource EpisodeListTemplate}"
+                        ScrollViewer.VerticalScrollBarVisibility="Auto"
+                        ScrollViewer.VerticalScrollMode="Enabled"
+                        IsSwipeEnabled="True"
+                        IsItemClickEnabled="True"
+                        SelectedIndex="{Binding SelectedTVEpisodeIndex, Mode=TwoWay}"
+                        SelectionMode="Single">
+                        <!--ItemClick="EpisodeView_ItemClick">-->
+                        <!--ItemsSource="{x:Bind Items, Mode=OneWay}" 
+                        ItemTemplate="{StaticResource ControlItemTemplate}"-->
+                        <ListView.Transitions>
+                            <TransitionCollection>
+                                <EntranceThemeTransition/>
+                            </TransitionCollection>
+                        </ListView.Transitions>
+
+                        <ListView.HeaderTemplate>
+                            <DataTemplate>
+                                <Grid Width="640" Height="Auto" Margin="5" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="360"/>
+                                        <ColumnDefinition Width="120"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Watched" FontSize="18" FontWeight="Bold" Foreground="{StaticResource MediumDark}" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Left"
+                                               Tag="WATCHED,ASC" Tapped="ShowEpisodesHeading_Tapped"/>
+                                    
+                                    <TextBlock Grid.Column="1"  Text="Epsiode" FontSize="16" FontWeight="Bold" Foreground="{StaticResource MediumDark}" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               Tag="EPISODE,ASC" Tapped="ShowEpisodesHeading_Tapped"/>
+                                    
+                                    <TextBlock Grid.Column="2" Text="Title" FontSize="16" FontWeight="Bold" Foreground="{StaticResource MediumDark}" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left"
+                                               Tag="TITLE,ASC" Tapped="ShowEpisodesHeading_Tapped"/>
+                                    
+                                    <TextBlock Grid.Column="3"  Text="Date Watched" FontSize="16" FontWeight="Bold" Foreground="{StaticResource MediumDark}" 
+                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                               Tag="DATEWATCHED,ASC" Tapped="ShowEpisodesHeading_Tapped"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.HeaderTemplate>
+
+                    </ListView>
+                </DataTemplate>
+            </HubSection>
+        </Hub>
+
+        <ProgressRing Name="pgbLoadingShow" IsActive="{Binding LoadingShowData}" Width="100" Height="100" Margin="270,50" />
     </Grid>
 </Page>

@@ -1,0 +1,56 @@
+﻿<ContentDialog
+    x:Class="TVTracker.CastCrewDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TVTracker"
+    xmlns:tvmaze="using:TVMazeAPI.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    RequestedTheme="Dark"
+    Title="TVTracker - Cast &amp; Crew"
+    PrimaryButtonText="OK"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+    Width="500"
+    VerticalAlignment="Center" HorizontalAlignment="Center">
+
+    <Grid Width="400" HorizontalAlignment="Stretch" Margin="0,10">
+        <ListView Grid.Row="0" Name="lvwCastList" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            <!--<ListView.HeaderTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0" Text="Character" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                   Margin="3" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+
+                        <TextBlock Grid.Column="1"  Text="Actor" FontSize="16"  FontWeight="Bold" Foreground="{StaticResource Bright}" 
+                                   Margin="3" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.HeaderTemplate>-->
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="tvmaze:CastMember">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="3" Text="{Binding character}" FontSize="14" Foreground="{StaticResource Bright}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Margin="3" Text="{Binding person}" FontSize="14" Foreground="{StaticResource Light}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentDialog>
+

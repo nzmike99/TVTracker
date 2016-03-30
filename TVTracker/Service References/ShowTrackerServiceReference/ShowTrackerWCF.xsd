@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ShowData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="EpisodesData" nillable="true" type="tns:ArrayOfEpisode" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="IMDBID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastWatchedDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastWatchedEpisode" type="xs:int" />
+      <xs:element minOccurs="0" name="LastWatchedSeason" type="xs:int" />
+      <xs:element minOccurs="0" name="Seasons" type="xs:int" />
+      <xs:element minOccurs="0" name="SeasonsData" nillable="true" type="tns:ArrayOfSeason" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TVDBID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TVMazeID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TVRageID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ShowData" nillable="true" type="tns:ShowData" />
+  <xs:complexType name="ArrayOfEpisode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Episode" nillable="true" type="tns:Episode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEpisode" nillable="true" type="tns:ArrayOfEpisode" />
+  <xs:complexType name="Episode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateWatched" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EpisodeNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="EpisodeRef" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SeasonID" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowID" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Watched" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Episode" nillable="true" type="tns:Episode" />
+  <xs:complexType name="ArrayOfSeason">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Season" nillable="true" type="tns:Season" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSeason" nillable="true" type="tns:ArrayOfSeason" />
+  <xs:complexType name="Season">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Episodes" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="SeasonNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowID" type="xs:int" />
+      <xs:element minOccurs="0" name="Watched" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Season" nillable="true" type="tns:Season" />
+  <xs:complexType name="ArrayOfShowData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ShowData" nillable="true" type="tns:ShowData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfShowData" nillable="true" type="tns:ArrayOfShowData" />
+  <xs:complexType name="ServiceResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="Method" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Success" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ServiceResult" nillable="true" type="tns:ServiceResult" />
+  <xs:complexType name="ArrayOfSTSeason">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="STSeason" nillable="true" type="tns:STSeason" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSTSeason" nillable="true" type="tns:ArrayOfSTSeason" />
+  <xs:complexType name="STSeason">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Episodes" type="xs:int" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="STEpisodes" nillable="true" type="tns:ArrayOfSTEpisode" />
+      <xs:element minOccurs="0" name="STShow" nillable="true" type="tns:STShow" />
+      <xs:element minOccurs="0" name="SeasonNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowID" type="xs:int" />
+      <xs:element minOccurs="0" name="Watched" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="STSeason" nillable="true" type="tns:STSeason" />
+  <xs:complexType name="ArrayOfSTEpisode">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="STEpisode" nillable="true" type="tns:STEpisode" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSTEpisode" nillable="true" type="tns:ArrayOfSTEpisode" />
+  <xs:complexType name="STEpisode">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateWatched" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EpisodeNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="EpisodeRef" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="STSeason" nillable="true" type="tns:STSeason" />
+      <xs:element minOccurs="0" name="STShow" nillable="true" type="tns:STShow" />
+      <xs:element minOccurs="0" name="SeasonID" type="xs:int" />
+      <xs:element minOccurs="0" name="ShowID" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Watched" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="STEpisode" nillable="true" type="tns:STEpisode" />
+  <xs:complexType name="STShow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Active" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ID" type="xs:int" />
+      <xs:element minOccurs="0" name="IMDBID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdated" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastWatchedDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastWatchedEpisode" type="xs:int" />
+      <xs:element minOccurs="0" name="LastWatchedSeason" type="xs:int" />
+      <xs:element minOccurs="0" name="STEpisodes" nillable="true" type="tns:ArrayOfSTEpisode" />
+      <xs:element minOccurs="0" name="STSeasons" nillable="true" type="tns:ArrayOfSTSeason" />
+      <xs:element minOccurs="0" name="Seasons" type="xs:int" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TVDBID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TVMazeID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="TVRageID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Title" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="STShow" nillable="true" type="tns:STShow" />
+</xs:schema>

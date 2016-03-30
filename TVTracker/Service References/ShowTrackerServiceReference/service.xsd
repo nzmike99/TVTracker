@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" />
+  <xs:element name="GetShowData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tvMazeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetShowDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="GetShowDataResult" nillable="true" type="q1:ShowData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllShows">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllShowsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="GetAllShowsResult" nillable="true" type="q2:ArrayOfShowData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddShow">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="showData" nillable="true" type="q3:ShowData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddShowResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="AddShowResult" nillable="true" type="q4:ServiceResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEpisode">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="showID" type="xs:int" />
+        <xs:element minOccurs="0" name="seasonID" type="xs:int" />
+        <xs:element minOccurs="0" name="episodeNumber" type="xs:int" />
+        <xs:element minOccurs="0" name="isWatched" type="xs:boolean" />
+        <xs:element minOccurs="0" name="dateWatched" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateEpisodeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="UpdateEpisodeResult" nillable="true" type="q5:ServiceResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteShow">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="showID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="DeleteShowResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="DeleteShowResult" nillable="true" type="q6:ServiceResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateShow">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="tvMazeID" type="xs:int" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="seasons" nillable="true" type="q7:ArrayOfSTSeason" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="episodes" nillable="true" type="q8:ArrayOfSTEpisode" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateShowResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/ShowTrackerWCF" minOccurs="0" name="UpdateShowResult" nillable="true" type="q9:ServiceResult" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
