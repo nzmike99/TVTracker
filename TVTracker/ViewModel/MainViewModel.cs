@@ -154,6 +154,8 @@ namespace TVTracker.ViewModel
                 await PopulateShowDetails();
                 //SelectedTVShow.PropertyChanged += PropertyChanged;
 
+                AllShows = new ObservableCollection<TVShow>(AllShows.OrderByDescending(x => x.LastWatchedDate).ThenBy(x => x.Title));
+
                 isLoading = false;
             }
             catch (FaultException fex)
@@ -276,6 +278,8 @@ namespace TVTracker.ViewModel
                     newShow.ID = resp.ID;
                     newShow.APIDataLoaded = false;
                     AllShows.Add(newShow);
+                    AllShows = new ObservableCollection<TVShow>(AllShows.OrderBy(x => x.Title));
+                    //SortShowsList("TITLE,ASC");
                     SelectedTVShow = newShow;
 
                     //May not need to do this
@@ -536,16 +540,6 @@ namespace TVTracker.ViewModel
 
 
         }
-
-
-        //public event PropertyChangedEventHandler PropertyChanged;
-        //public void RaisePropertyChanged(string propName)
-        //{
-        //    if (this.PropertyChanged != null)
-        //    {
-        //        this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        //    }
-        //}
 
         public event PropertyChangedEventHandler OnShowsListSorted;
         //public event PropertyChangedEventHandler OnStartedLoadingShow;

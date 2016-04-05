@@ -19,15 +19,11 @@
         <CommandBar x:Name="bottomAppBar" Visibility="Visible" IsOpen="False" ClosedDisplayMode="Compact" IsSticky="False">
             <AppBarButton x:Name="searchButton" Label="Search" Icon="Find" Click="SearchButton_Click" />
             <AppBarButton x:Name="addButton" Label="Add Show" Icon="Add" Click="AddShowButton_Click" />
-            <AppBarButton x:Name="waitButton" Label="Test" Icon="Clock" Click="WaitButton_Click" />
+            <AppBarButton x:Name="calendarButton" Label="Calendar" Icon="Calendar" Click="CalendarButton_Click" />
             <AppBarButton x:Name="refreshButton" Label="Refresh" Icon="Refresh" Click="RefreshButton_Click" />
         </CommandBar>
     </Page.BottomAppBar>
-    <!--xmlns:vm="using:TVTracker.ViewModel"-->
 
-    <!--<Page.DataContext>
-        <vm:MainViewModel/>
-    </Page.DataContext>-->
 
     <Page.Resources>
         <!--<SolidColorBrush x:Key="SectionBackground1" Color="Gray"/>-->
@@ -255,18 +251,20 @@
 
                 <DataTemplate x:DataType="local:MainPage">
 
-                    <ListView Grid.Row="0" 
-                                Foreground="{StaticResource Light}"
-                                Background="{StaticResource Dark}"
-                                Margin="-14,20,0,0"                              
-                                ItemsSource="{Binding AllShows}"                              
-                                ItemTemplate="{StaticResource ShowListTemplate}"
-                                IsSwipeEnabled="True"
-                                IsItemClickEnabled="True"
-                                SelectedItem="{Binding SelectedTVShow, Mode=TwoWay}"                                
-                                SelectionMode="Single"
-                                ScrollViewer.VerticalScrollMode="Enabled"
-                                ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListView Name="lvwShows" 
+                              Grid.Row="0" 
+                              Foreground="{StaticResource Light}"
+                              Background="{StaticResource Dark}"
+                              Margin="-14,20,0,0"   
+                              Loaded="lvwShows_Loaded"
+                              ItemsSource="{Binding AllShows}"                              
+                              ItemTemplate="{StaticResource ShowListTemplate}"
+                              IsSwipeEnabled="True"
+                              IsItemClickEnabled="True"
+                              SelectedItem="{Binding SelectedTVShow, Mode=TwoWay}"                                
+                              SelectionMode="Single"                              
+                              ScrollViewer.VerticalScrollMode="Enabled"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto">
                         
                         <!---->
                         <!--SelectedIndex="{Binding SelectedTVShowIndex, Mode=TwoWay}"-->

@@ -22,6 +22,11 @@ namespace TVTracker
         private MainViewModel vm;
         private TVShow selectedShow;
 
+        //Store a reference to the instance of the show listview since we can't get it directly from the code behind without
+        //going through the child controls of the HubSection (which I can't get to work - need to do more research on this)
+        //See the event lvwShows_Loaded.
+        private ListView lvwShows;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -35,7 +40,16 @@ namespace TVTracker
 
             //hsDetails.DataContext = vm.SelectedTVShow;
 
+            //ReadWebFile();
+
         }
+
+        //private async void ReadWebFile()
+        //{
+        //    var html = await Windows.Storage.PathIO.ReadTextAsync(@"ms-appx:///ShowCalendar.html");
+        //    if (html == null)
+        //        html = "";
+        //}
 
         private async void VMExceptionOccurred(object sender, CustomEventArgs e)
         {
@@ -111,6 +125,10 @@ namespace TVTracker
 
                 //TVShow newShow = new TVShow(tvMazeShow);
                 await vm.AddNewShow(new TVShow(tvMazeShow));
+                //vm.SortShowsList("TITLE,ASC");
+
+                if (lvwShows != null)
+                    lvwShows.ScrollIntoView(vm.SelectedTVShow);
 
             }
         }
@@ -125,10 +143,10 @@ namespace TVTracker
         }
 
         //TODO: Could set reminders for new shows in calendar - e.g: "Bosch S02 starts 13/03 in the USA"
-        private void WaitButton_Click(object sender, RoutedEventArgs e)
+        private void CalendarButton_Click(object sender, RoutedEventArgs e)
         {
-           // pgbLoadingShow.IsActive = !pgbLoadingShow.IsActive;
-            //pgbLoadingShow.IsEnabled = pgbLoadingShow.IsActive;
+            //ShowCalendar cal = new ShowCalendar();
+            this.Frame.Navigate(typeof(ShowCalendar));
         }
 
         private async void RefreshButton_Click(object sender, RoutedEventArgs e)
@@ -211,6 +229,19 @@ namespace TVTracker
             //btn.Content = $"Result: {result.Label} ({result.Id})";
         }
 
+        private void lvwShows_Loaded(object sender, RoutedEventArgs e)
+        {
+            lvwShows = (ListView)sender;
+        }
+
+        //private void lvwShows_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        //{
+        //    if (vm.SelectedTVShow != null)
+        //    {
+        //        ListView lvw = (ListView)sender;
+        //        lvw.ScrollIntoView(vm.SelectedTVShow);
+        //    }
+        //}
     }
 }
 

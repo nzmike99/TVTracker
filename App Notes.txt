@@ -1,0 +1,36 @@
+BUGS
+====
+
+- Why do controls that are less than 720 wide look too big on phone screen?
+
+- Cast and crew dialog is way too big on phone screen (too wide)
+
+- App crashed on phone when selecting Veep (after adding it in a previous execution) when trying to update the show.
+  It did say the show had been updated but then crashed after that.
+  
+
+
+TO DO
+=====
+
+- Add icons!!!
+
+- Work on layout
+  - On a larger screen hub section should use all width wisth with each section equal width but also with a min width.
+  - On phone screen a single hub section needs to take the full width (or just less, like the pivot control?)
+
+- Think about swapping the show details and episode hub sections as the main interaction is with the episodes not the details.
+
+- Refactor to store show details in DB as it's too slow when changing shows (TEST PERFORMANCE BEFORE DOING THIS?!?!?)
+
+- Change main shows list to a Semantic Zoom?
+
+- Add search to main shows 
+  - Will need to change All Shows to use the ColelctionViewSource so it can be filtered)
+
+- Implement the collapsible Expander control for the episodes section
+  - When user clicks the header checkbox (Watched) need to update the DB - but ask user first?
+
+- On phone version when a show is selected need to focus either the show details or the episodes hubsection
+
+- Need to get progress ring working anywhere it is slow (like adding new shows, getting cast details, etc)

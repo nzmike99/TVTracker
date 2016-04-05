@@ -21,13 +21,13 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="b81c54b8-8dda-44c2-88b7-78efe26934ab" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="e08ccf7b-88f7-4df6-946f-8c5a17a3c9a2" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8eafe29f-474f-4c03-9123-10b6143a6fc6" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
-    <MetadataFile FileName="ShowTrackerWCF.xsd" MetadataType="Schema" ID="0302d768-6462-45ad-8c33-4f07661778b6" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="35114af5-ae28-4dcb-b8df-dc30f07952fc" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="effb3915-70d9-4915-bd7d-c253f661f0fc" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="c59d364c-253e-4f6c-859a-507b3782ef86" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex/mex" />
+    <MetadataFile FileName="ShowTrackerWCF1.xsd" MetadataType="Schema" ID="48bddf3c-4544-4227-a0ca-ca06afd598ec" SourceId="1" SourceUrl="http://41south.net/tvtracker/showtrackerwcf.showtrackerservice.svc/mex/mex/mex/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

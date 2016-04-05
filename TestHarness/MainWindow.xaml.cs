@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using System.Windows;
 using System.IO;
 using System.Net.Http;
@@ -10,7 +12,7 @@ namespace TestHarness
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<CalendarEntry> allShows;
+        private List<CalendarEntry> allShows;
 
         public MainWindow()
         {
@@ -25,8 +27,7 @@ namespace TestHarness
 
             if (!string.IsNullOrEmpty(srcUri))
             {
-                //TOOD: When adding this to TVTracker make a ViewModel containing the collection of CalendarEntry and do loading etc.
-                
+                //TOOD: When adding this to TVTracker make a ViewModel containing the collection of CalendarEntry and do loading etc.                
 
                 allShows = new List<CalendarEntry>();
                 string calData = "";
@@ -73,7 +74,6 @@ namespace TestHarness
                             showData = calData.Substring(s + startTag.Length, e - (s + startTag.Length));
                             calEntry = new CalendarEntry(showData);
                             allShows.Add(calEntry);
-                            // txtOutput.Text += "Added " + calEntry.Summary + "\r\n";
                         }
                         else
                             foundShow = false;
@@ -82,9 +82,7 @@ namespace TestHarness
                         foundShow = false;
                 } while (foundShow);
 
-                //txtOutput.Text += "\r\nDONE!! Added " + allShows.Count.ToString() + " shows.";
-
-                dgShows.ItemsSource = allShows;
+                dgShows.ItemsSource = allShows.OrderBy(x => x.AirDate).ThenBy(x => x.Show).ThenBy(x => x.Episode);
                 
             }
         }

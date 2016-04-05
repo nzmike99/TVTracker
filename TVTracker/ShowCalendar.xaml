@@ -1,0 +1,77 @@
+﻿<Page
+    x:Class="TVTracker.ShowCalendar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TVTracker"
+    xmlns:model="using:TVTracker.Model"
+    xmlns:vm="using:TVTracker.ViewModel"
+    xmlns:hlp="using:TVTracker.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
+    
+    <!--<Page.DataContext>
+        <vm:CalendarViewModel/>
+    </Page.DataContext>-->    
+
+    <Page.Resources>
+        
+        <!--hlp:ShortDateTimeFormatConverter x:Key="ShortDateTimeFormatConverter"/>-->
+        
+        <!--<DataTemplate x:Key="CalendarEntryTemplate" x:DataType="model:CalendarEntry">
+
+            <Grid Height="Auto" HorizontalAlignment="Center">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="150"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{x:Bind Show}" FontSize="16" Foreground="{StaticResource MediumDark}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="{x:Bind Episode}" FontSize="16" Foreground="{StaticResource MediumDark}" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center"  />
+
+                <TextBlock Grid.Row="0" Grid.Column="2" FontSize="16" Foreground="{StaticResource MediumDark}"                                                     
+                           VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           Text="{Binding AirDate, Converter={StaticResource ShortDateTimeFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy HH\\\\:mm}'}"/>
+
+            </Grid>
+        </DataTemplate-->
+
+    </Page.Resources>
+
+    <Grid Background="{StaticResource Light}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ProgressBar Name="pgbLoading" IsEnabled="True" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <!--<ProgressRing Name="pgbLoadingShows" IsActive="True" Width="100" Height="100" Foreground="{StaticResource Dark}" 
+                      VerticalAlignment="Center" HorizontalAlignment="Center" />-->
+        
+        <!--<GridView Name="grdCalendar" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="7"/>
+                </ItemsPanelTemplate>
+            </GridView.ItemsPanel>
+        </GridView>-->
+
+        <WebView Grid.Row="1" Name="webView1">
+            
+        </WebView>
+
+        <!--<ProgressRing Name="pgbLoading" IsActive="{Binding LoadingShowData}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" />-->
+
+    </Grid>
+
+    
+    
+</Page>

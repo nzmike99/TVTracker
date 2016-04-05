@@ -108,6 +108,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\ManageShow.xaml.cs" />
+    <Compile Include="Model\CalendarEntry.cs" />
     <Compile Include="Model\Episode.cs" />
     <Compile Include="Model\Season.cs" />
     <Compile Include="Model\TVShow.cs" />
@@ -117,6 +118,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ShowCalendar.xaml.cs">
+      <DependentUpon>ShowCalendar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\CalendarEntryControl.xaml.cs">
+      <DependentUpon>CalendarEntryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\EpisodesControl.xaml.cs">
+      <DependentUpon>EpisodesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CalendarViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ShowViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
@@ -126,14 +137,14 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <None Include="Properties\ServiceReferences.Designer.ClientConfig" />
-    <None Include="Service References\ShowTrackerServiceReference\service.wsdl" />
-    <None Include="Service References\ShowTrackerServiceReference\service.xsd">
+    <None Include="Service References\ShowTrackerServiceReference\service1.wsdl" />
+    <None Include="Service References\ShowTrackerServiceReference\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ShowTrackerServiceReference\service1.xsd">
+    <None Include="Service References\ShowTrackerServiceReference\service21.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\ShowTrackerServiceReference\ShowTrackerWCF.xsd">
+    <None Include="Service References\ShowTrackerServiceReference\ShowTrackerWCF1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ShowTrackerServiceReference\TVTracker.ShowTrackerServiceReference.ServiceResult.datasource">
@@ -145,6 +156,9 @@
     <None Include="TVTracker_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ShowCalendar.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -180,6 +194,18 @@
     <Page Include="Dialogs\ManageShow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ShowCalendar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\CalendarEntryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\EpisodesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

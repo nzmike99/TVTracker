@@ -4,14 +4,11 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TVTracker.ViewModel;
 
-/*********************************
-*
-*
-**********************************/
-namespace TestHarness
+namespace TVTracker.Model
 {
-    public class CalendarEntry
+    public class CalendarEntry : ViewModelBase
     {
         public string Show { get; set; }
         public string Title { get; set; }
@@ -19,7 +16,7 @@ namespace TestHarness
         public DateTime AirDate { get; set; }
         public string Timezone { get; set; }
         public string URL { get; set; }
-        
+
         public CalendarEntry(string calData)
         {
             List<string> startTags = new List<string>()
@@ -32,10 +29,10 @@ namespace TestHarness
             string tagName;
             string nextTagName;
 
-            for (int i = 0;i < startTags.Count;i++)
+            for (int i = 0; i < startTags.Count; i++)
             {
                 tagName = startTags[i];
-                if (i < startTags.Count-1)
+                if (i < startTags.Count - 1)
                     nextTagName = startTags[i + 1];
                 else
                     //We're done, no more tags so break out of loop
@@ -60,15 +57,17 @@ namespace TestHarness
 
                                     //Now, get the next 15 characters after the ':' which is the show datetime.
                                     this.AirDate = DateTime.ParseExact(calData.Substring(ee + 1, 15), "yyyyMMddTHHmmss", CultureInfo.InvariantCulture);
-                                                                        
+
                                 }
                                 //else
-                                    ///WTF do we do here ???
+                                ///WTF do we do here ???
 
                                 break;
 
                             case "URL:":
+                                //For some reason the URLs often have one or more CRLFs in them so ensure these are expunged.
                                 this.URL = calData.Substring(s + tagName.Length, e - (s + tagName.Length));
+                                this.URL = this.URL.Replace(Environment.NewLine, "");
                                 break;
 
                             case "SUMMARY:":
@@ -91,7 +90,7 @@ namespace TestHarness
                     }
 
                 }
-            } 
+            }
         }
     }
 }
